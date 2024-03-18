@@ -13,11 +13,13 @@ public class CategoriaSrv implements ServicioGenerico<Categoria,String>{
     private CategoriaRepositorio catRep;
 
     public Categoria guardar(Categoria categoria){
+
         return catRep.save(categoria);
     }
 
     @Override
     public List<Categoria> listar() {
+
         return catRep.findAll();
     }
 

@@ -28,5 +28,22 @@ public class ProductoCrtl {
         return new ResponseEntity<Producto>(productoSrv.guardar(producto),HttpStatus.CREATED);
     }
 
+    @DeleteMapping("eliminar/{id}")
+    public ResponseEntity eliminar(@PathVariable(name = "id") String id){
+        productoSrv.eliminar(id);
+        return  ResponseEntity.ok("Producto Eliminado");
+    }
+
+    @PutMapping("actualizar/{id}")
+    public ResponseEntity actualizar(@PathVariable(name = "id") String id,@RequestBody Producto producto){
+
+        return  ResponseEntity.ok("Producto acutalizado");
+    }
+
+    @GetMapping("buscar/{nombre}")
+    public ResponseEntity<List<Producto>> buscarNombre(@PathVariable("nombre")String nombre){
+        return new ResponseEntity<>(productoSrv.buscarNombre(nombre),HttpStatus.ACCEPTED);
+    }
+
 
 }
