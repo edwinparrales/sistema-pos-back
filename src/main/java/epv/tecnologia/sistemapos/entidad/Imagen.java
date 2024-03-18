@@ -12,9 +12,13 @@ public class Imagen {
      @GeneratedValue(strategy =  GenerationType.UUID)
      private String id;
      private String url;
+
      @ManyToOne
      @JoinColumn(name = "id_producto")
      @JsonIgnore
      private Producto producto;
 
+     public String getIdProducto(){
+          return this.producto.getId();
+     }
 }

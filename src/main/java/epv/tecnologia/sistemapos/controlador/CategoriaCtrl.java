@@ -23,6 +23,12 @@ public class CategoriaCtrl {
     public ResponseEntity<List<Categoria>> listar(){
         return new ResponseEntity<>(catSrv.listar(),HttpStatus.OK);
     }
+    @DeleteMapping("eliminar/{id}")
+    public ResponseEntity eliminar(@PathVariable(name = "id")String id){
+
+        catSrv.eliminar(id);
+        return  ResponseEntity.ok("Categoria eliminada");
+    }
 
 
 }

@@ -38,5 +38,9 @@ public class ImagenSrv implements ServicioGenerico<Imagen,String>{
         imgRep.actualizar(imagen.getUrl(),imagen.getProducto(), imagen.getId());
     }
 
+    public void guardar(List<Imagen> imagenes){
+        imgRep.saveAll(imagenes);
+    }
+
 
 }

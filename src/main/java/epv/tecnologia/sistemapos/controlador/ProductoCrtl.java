@@ -1,6 +1,8 @@
 package epv.tecnologia.sistemapos.controlador;
 
+import epv.tecnologia.sistemapos.entidad.Imagen;
 import epv.tecnologia.sistemapos.entidad.Producto;
+import epv.tecnologia.sistemapos.servicio.ImagenSrv;
 import epv.tecnologia.sistemapos.servicio.ProductoSrv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,8 @@ import java.util.List;
 public class ProductoCrtl {
     @Autowired
     ProductoSrv productoSrv;
+    @Autowired
+    ImagenSrv imgSrv;
 
     @GetMapping("listar")
     public ResponseEntity<List<Producto>> listar(){
@@ -25,7 +29,15 @@ public class ProductoCrtl {
 
     @PostMapping("guardar")
     public ResponseEntity<Producto> guardar(@RequestBody Producto producto){
-        return new ResponseEntity<Producto>(productoSrv.guardar(producto),HttpStatus.CREATED);
+
+        List<Imagen> imagenes = producto.getUrlsImagen();
+        Producto productoNuevo = productoSrv.guardar(producto);
+        imagenes.stream().forEach(imagen -> imagen.setProducto(productoNuevo));
+        imagenes.addAll(imagenes);
+        imgSrv.guardar(imagenes);
+
+
+        return new ResponseEntity<Producto>(productoNuevo,HttpStatus.CREATED);
     }
 
     @DeleteMapping("eliminar/{id}")
