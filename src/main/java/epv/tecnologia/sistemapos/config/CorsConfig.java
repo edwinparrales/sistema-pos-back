@@ -15,18 +15,18 @@ public class CorsConfig {
       return  new WebMvcConfigurer() {
           @Override
           public void addCorsMappings(CorsRegistry registry) {
-              WebMvcConfigurer.super.addCorsMappings(registry);
-              registry.addMapping("/media/**")
+              //WebMvcConfigurer.super.addCorsMappings(registry);
+              registry.addMapping("/api/media/**")
                       .allowedOrigins("*")
                       .allowedMethods("*");
           }
 
-          @Override
-          public void addResourceHandlers(ResourceHandlerRegistry registry) {
-              WebMvcConfigurer.super.addResourceHandlers(registry);
-              registry.addResourceHandler("/mediafiles/**")
-                      .addResourceLocations("/mediafiles/");
-          }
+//          @Override
+//          public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//              //WebMvcConfigurer.super.addResourceHandlers(registry);
+//              registry.addResourceHandler("/mediafiles/**")
+//                      .addResourceLocations("/mediafiles/");
+//          }
       };
 
     }

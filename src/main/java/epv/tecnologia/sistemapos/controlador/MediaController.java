@@ -10,10 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import java.io.File;
+
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
 @RequestMapping("api/media/")
@@ -28,7 +31,7 @@ public class MediaController {
        String host = request.getRequestURL().toString().replace(request.getRequestURI(),"");
        String url = ServletUriComponentsBuilder
                .fromHttpUrl(host)
-               .path("/media/")
+               .path("/api/media/")
                .path(path)
                .toUriString();
        return Map.of("url",url);
@@ -42,6 +45,17 @@ public class MediaController {
                 .header(HttpHeaders.CONTENT_TYPE,contentType)
                 .body(file);
 
+    }
+
+    @PostMapping("uploads")
+    public Map<String,String> uploadFiles(@RequestParam("files")List<MultipartFile> files){
+     AtomicInteger cont = new AtomicInteger();
+     Map<String,String> rutas = new HashMap<>();
+            files.stream().forEach(f ->{
+                cont.set(cont.get() + 1);
+                rutas.put("keyurl"+cont,uploadFile(f).get("url"));
+            });
+        return rutas;
     }
 
 }
